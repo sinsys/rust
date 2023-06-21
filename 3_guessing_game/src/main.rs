@@ -17,6 +17,7 @@ fn main() {
         //
         .expect("Failed to read line");
 
-    // use variable
+    // use variable (also demonstrate expansion)
+    // empty {} expand args in order
     println!("You guessed: {guess} and expanded number is: {}", 5 + 5);
 }
