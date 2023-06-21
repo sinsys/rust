@@ -11,10 +11,12 @@ fn main() {
     // standard input
     io::stdin()
         // read first line of user input
+        // & indicates Ref, and single memory allocation
         .read_line(&mut guess)
-        // error condition
+        // Result itself has an `expect()` method we can call
+        //
         .expect("Failed to read line");
 
     // use variable
-    println!("You guessed: {guess}");
+    println!("You guessed: {guess} and expanded number is: {}", 5 + 5);
 }
