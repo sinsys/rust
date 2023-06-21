@@ -20,9 +20,9 @@ Rust is an ahead-of-time compiled language, meaning you can compile a program an
 
 ## Examples
 
-- 01_hello_world - Most basic program possible.
-- 02_hello_cargo - Package management.
-- 03_guessing_game - Variables, iteration, logic
+- [01_hello_world](1_hello_world/main.rs) - Most basic program possible
+- [02_hello_cargo](2_hello_cargo/main.rs) - Package management
+- [03_guessing_game](3_guessing_game/main.rs) - Variables, iteration, logic
 
 ## Package Management
 
@@ -34,10 +34,10 @@ Rust is an ahead-of-time compiled language, meaning you can compile a program an
 
 ### Commands
 
-- `cargo new <project name>` - Scaffolds new Rust project.
-- `cargo build` - Builds project.
-- `cargo run` - Runs build (and builds if needed).
-- `cargo check` - Sanity check compilation (no executable generated).
+- `cargo new <project name>` - Scaffolds new Rust project
+- `cargo build` - Builds project
+- `cargo run` - Runs build (and builds if needed)
+- `cargo check` - Sanity check compilation (no executable generated)
 
 ### Libraries
 
