@@ -21,8 +21,8 @@ Rust is an ahead-of-time compiled language, meaning you can compile a program an
 ## Examples
 
 - [01_hello_world](1_hello_world/main.rs) - Most basic program possible
-- [02_hello_cargo](2_hello_cargo/main.rs) - Package management
-- [03_guessing_game](3_guessing_game/main.rs) - Variables, iteration, logic
+- [02_hello_cargo](2_hello_cargo/src/main.rs) - Package management
+- [03_guessing_game](3_guessing_game/src/main.rs) - Variables, iteration, logic
 
 ## Package Management
 
