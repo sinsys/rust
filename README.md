@@ -38,6 +38,7 @@ Rust is an ahead-of-time compiled language, meaning you can compile a program an
 - `cargo build` - Builds project
 - `cargo run` - Runs build (and builds if needed)
 - `cargo check` - Sanity check compilation (no executable generated)
+- `cargo doc --open`  Generates documentation for all dependencies (and opens in browser)  
 
 ### Libraries
 
