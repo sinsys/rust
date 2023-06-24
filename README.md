@@ -6,6 +6,7 @@
     - [Libraries](#libraries)
     - [Crates](#crates)
   - [Error Handling](#error-handling)
+  - [Concepts](#concepts)
 
 # RUST
 
@@ -23,6 +24,8 @@ Rust is an ahead-of-time compiled language, meaning you can compile a program an
 - [01_hello_world](1_hello_world/main.rs) - Most basic program possible
 - [02_hello_cargo](2_hello_cargo/src/main.rs) - Package management
 - [03_guessing_game](3_guessing_game/src/main.rs) - Variables, iteration, logic
+- [04_ownership](4_ownership/src/main.rs) - Deeper variables, data types, functions, and control flow
+  - This is a larger set of functionality and contains many funcs.
 
 ## Package Management
 
@@ -76,3 +79,9 @@ Read documentation for `expect()` signature:
 
 > Warnings will be thrown if `.expect()` is not chained onto `Result`
 
+## Concepts
+
+[Common Rust Programming Concepts](https://doc.rust-lang.org/book/ch03-00-common-programming-concepts.html)
+
+Statements are instructions that perform some action and do not return a value.
+Expressions evaluate to a resultant value. Let’s look at some examples.
