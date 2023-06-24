@@ -24,7 +24,7 @@ Rust is an ahead-of-time compiled language, meaning you can compile a program an
 - [01_hello_world](1_hello_world/main.rs) - Most basic program possible
 - [02_hello_cargo](2_hello_cargo/src/main.rs) - Package management
 - [03_guessing_game](3_guessing_game/src/main.rs) - Variables, iteration, logic
-- [04_ownership](4_ownership/src/main.rs) - Deeper variables, data types, functions, and control flow
+- [04_concepts](4_concepts/src/main.rs) - Deeper variables, data types, functions, and control flow
   - This is a larger set of functionality and contains many funcs.
 
 ## Package Management
@@ -85,3 +85,12 @@ Read documentation for `expect()` signature:
 
 Statements are instructions that perform some action and do not return a value.
 Expressions evaluate to a resultant value. Let’s look at some examples.
+
+We explore many programming concepts in the concepts section.
+
+> [04_concepts](4_concepts/src/main.rs) - Deeper variables, data types, functions, and control flow
+
+```rust
+cd 4_concepts
+cargo run
+```
