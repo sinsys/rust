@@ -7,6 +7,7 @@
     - [Crates](#crates)
   - [Error Handling](#error-handling)
   - [Concepts](#concepts)
+    - [Evaluation](#evaluation)
 
 # RUST
 
@@ -83,9 +84,17 @@ Read documentation for `expect()` signature:
 
 [Common Rust Programming Concepts](https://doc.rust-lang.org/book/ch03-00-common-programming-concepts.html)
 
-Statements are instructions that perform some action and do not return a value.
-Expressions evaluate to a resultant value. Let’s look at some examples.
-
+### Evaluation
+```rust
+// Statements are instructions that perform some action and do not return a value.
+let foo = "bar";
+println!("baz");
+// Expressions evaluate to a resultant value. Let’s look at some examples.
+3 = 3
+fn life() {
+  42
+}
+```
 We explore many programming concepts in the concepts section.
 
 > [04_concepts](4_concepts/src/main.rs) - Deeper variables, data types, functions, and control flow
