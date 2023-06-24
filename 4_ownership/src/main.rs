@@ -1,4 +1,4 @@
-use std::io;
+// use std::io;
 const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
 
 fn main() {
@@ -11,7 +11,19 @@ fn main() {
     println!("\n_FUNCTIONS________\n");
     accept_param(5);
     print_label(5, 'D');
-    expressions();
+    let return_val = expressions();
+    println!("And return_val is {return_val}");
+    let be_six = add_one(5);
+    println!("This should be 6?: {be_six}");
+    if_statements(4);
+    println!("\n_CONTROL_FLOW______\n");
+    for n in 1..4  {
+        control_flow(n);
+    }
+    loop_it();
+    loop_moar();
+    while_loop();
+    loop_collection();
 }
 
 fn variables() {
@@ -92,22 +104,6 @@ fn data_types() {
     println!("array_fill index 4 extract is [{array_fill_el}]");
 }
 
-fn break_stuff() {
-    let a = [1,2,3,4,5];
-    println!("Guess");
-
-    let mut index = String::new();
-    io::stdin()
-        .read_line(&mut index)
-        .expect("Failed to read line");
-    let index: usize = index.trim()
-        .parse()
-        .expect("Index entered was not a number");
-    
-    let element = a[index];
-    println!("The value at index {index} is: {element}");
-}
-
 fn accept_param(x: i32) {
     println!("The value of x is: {x}")
 }
@@ -116,11 +112,93 @@ fn print_label(x: i32, label: char) {
     println!("The measurement is: {x}{label}")
 }
 
-fn expressions() {
+fn expressions() -> i32 {
     let y = {
         let x = 3;
         x + 1 // Returns 4
     };
 
     println!("The value of y is: {y}");
+    y // Returns 4
+}
+
+fn add_one(x: i32) -> i32 {
+    x + 1
+}
+
+fn if_statements(x: i32) -> bool {
+    if x < 5 {
+        println!("True");
+        true
+    } else {
+        println!("False");
+        false
+    }
+}
+
+fn control_flow(x: i32) {
+    if x == 1 {
+        println!("X is 1");
+    } else if x == 2 {
+        println!("X is 2");
+    } else {
+        println!("X is greater than 2");
+    }
+}
+
+fn loop_it() {
+    let mut counter = 0;
+    let result = loop {
+        counter += 1;
+        if counter == 10 {
+            break counter * 2;
+        }
+    };
+    println!("The result is [{result}]") // 20
+}
+
+fn loop_moar() {
+    // Total 'counting loops
+    let mut counter = 0;
+
+    // Loop label
+    'counting: loop {
+        println!("Start...?");
+        let mut left = 10;
+        loop {
+            // Break outside loop!
+            if counter == 2 {
+                println!("No. Bail.");
+                break 'counting;
+            }
+
+            println!("Remaining: [{left}]");
+
+            // Break inside loop!
+            if left == 9 {
+                break;
+            }
+            left -= 1;
+        }
+        counter += 1;
+    }
+    println!("Final Count: [{counter}]");
+}
+
+fn while_loop() {
+    let mut number = 3;
+    while number != 0 {
+        println!("Number is [{number}]");
+        number -= 1;
+    }
+    println!("GOOOOOOOOO!");
+}
+
+fn loop_collection() {
+    let a = [10,20,30,40,50];
+    let mut index = 0;
+    while index < 5 {
+        println!("The value is: {}", a[index]);
+        index += 1;
+    }
 }
