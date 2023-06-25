@@ -1,6 +1,6 @@
-- [RUST](#rust)
+- [Rust-lang](#rust-lang)
   - [Description](#description)
-  - [Examples](#examples)
+  - [Directories](#directories)
   - [Package Management](#package-management)
     - [Commands](#commands)
     - [Libraries](#libraries)
@@ -9,9 +9,9 @@
     - [Error Handling](#error-handling)
     - [Evaluation](#evaluation)
     - [Ownership](#ownership)
-  - [Structs](#structs)
+    - [Structs](#structs)
 
-# RUST
+# Rust-lang
 
 ## Description
 
@@ -22,7 +22,9 @@ Rust is an ahead-of-time compiled language, meaning you can compile a program an
 
 **Everything is a trade-off in language design.**
 
-## Examples
+> [Learn Rust](https://www.rust-lang.org/learn)  
+
+## Directories
 
 - [1_getting-started](1_getting-started) - Hello, world!
 - [2_guessing_game](2_guessing-game/src/main.rs) - Basic project w/ variables, iteration, logic
@@ -125,7 +127,7 @@ If any of the rules are violated, the program won’t compile.
 
 > None of the features of ownership will slow down your program while it’s running.
 
-## Structs
+### Structs
 
 Structs operate much like objects on OOP.
 
