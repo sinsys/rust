@@ -5,10 +5,11 @@
     - [Commands](#commands)
     - [Libraries](#libraries)
     - [Crates](#crates)
-  - [Error Handling](#error-handling)
   - [Concepts](#concepts)
+    - [Error Handling](#error-handling)
     - [Evaluation](#evaluation)
-  - [Ownership](#ownership)
+    - [Ownership](#ownership)
+  - [Structs](#structs)
 
 # RUST
 
@@ -73,7 +74,15 @@ External dependencies (library crates) are fetched from:
 
 https://crates.io/
 
-## Error Handling
+## Concepts
+
+[Common Rust Programming Concepts](https://doc.rust-lang.org/book/ch03-00-common-programming-concepts.html)
+
+- [concepts](3_concepts/src/main.rs) - Deeper variables, data types, functions, and control flow
+- [ownership](4_ownership/src/main.rs) - Memory management and data integrity
+- [structs](5_structs/src/main.rs) - Data structure 'struct' (object)
+
+### Error Handling
 
 Result type enum is:
 - `Ok`
@@ -87,14 +96,6 @@ Read documentation for `expect()` signature:
 
 > Warnings will be thrown if `.expect()` is not chained onto `Result`
 
-## Concepts
-
-[Common Rust Programming Concepts](https://doc.rust-lang.org/book/ch03-00-common-programming-concepts.html)
-
-- [03_concepts](3_concepts/src/main.rs) - Deeper variables, data types, functions, and control flow
-- [04_ownership](4_ownership/src/main.rs) - Memory management and data integrity
-- [05_structs](5_structs/src/main.rs) - Data structure 'struct' (object)
-  
 ### Evaluation
 ```rust
 // Statements are instructions that perform some action and do not return a value.
@@ -109,9 +110,7 @@ println!("baz");
 ```
 We explore many programming concepts in the concepts section.
 
-
-
-## Ownership  
+### Ownership  
 
 **Ownership is a set of rules that govern how a Rust program manages memory.**
 
@@ -125,4 +124,21 @@ All programs have to manage the way they use a computer's memory while running.
 If any of the rules are violated, the program won’t compile.
 
 > None of the features of ownership will slow down your program while it’s running.
+
+## Structs
+
+Structs operate much like objects on OOP.
+
+```rust
+struct User {
+    active: bool,
+    username: String,
+    sign_in_count: u64
+}
+let user = User {
+  active: true,
+  username: String::from("username"),
+  sign_in_count: 1
+}
+```
 
