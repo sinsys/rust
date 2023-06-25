@@ -23,13 +23,11 @@ Rust is an ahead-of-time compiled language, meaning you can compile a program an
 
 ## Examples
 
-- [01_hello_world](1_hello_world/main.rs) - Most basic program possible
-- [02_hello_cargo](2_hello_cargo/src/main.rs) - Package management
-- [03_guessing_game](3_guessing_game/src/main.rs) - Variables, iteration, logic
-- [04_concepts](4_concepts/src/main.rs) - Deeper variables, data types, functions, and control flow
-  - This is a larger set of functionality and contains many funcs.
-- [05_ownership](5_ownership/src/main.rs) - Memory management and data integrity
-  - This is a relatively abstract area. Demo logs are available by running the binary.
+- [1_getting-started](1_getting-started) - Hello, world!
+- [2_guessing_game](2_guessing-game/src/main.rs) - Basic project w/ variables, iteration, logic
+- [3_concepts](3_concepts/src/main.rs) - Deeper variables, data types, functions, and control flow
+- [4_ownership](4_ownership/src/main.rs) - Memory management and data integrity
+- [5_structs](5_structs/src/main.rs) - Data structure 'struct' (object)
 
 **To run a binary, enter the directory for `cargo` commands:**  
 ```rust
@@ -93,6 +91,10 @@ Read documentation for `expect()` signature:
 
 [Common Rust Programming Concepts](https://doc.rust-lang.org/book/ch03-00-common-programming-concepts.html)
 
+- [03_concepts](3_concepts/src/main.rs) - Deeper variables, data types, functions, and control flow
+- [04_ownership](4_ownership/src/main.rs) - Memory management and data integrity
+- [05_structs](5_structs/src/main.rs) - Data structure 'struct' (object)
+  
 ### Evaluation
 ```rust
 // Statements are instructions that perform some action and do not return a value.
@@ -107,7 +109,7 @@ println!("baz");
 ```
 We explore many programming concepts in the concepts section.
 
-> [04_concepts](4_concepts/src/main.rs) - Deeper variables, data types, functions, and control flow
+
 
 ## Ownership  
 
@@ -124,4 +126,3 @@ If any of the rules are violated, the program won’t compile.
 
 > None of the features of ownership will slow down your program while it’s running.
 
-> [05_ownership](5_ownership/src/main.rs) - Memory management and data integrity
