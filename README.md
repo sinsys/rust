@@ -8,8 +8,10 @@
   - [Concepts](#concepts)
     - [Error Handling](#error-handling)
     - [Evaluation](#evaluation)
+    - [Debug](#debug)
     - [Ownership](#ownership)
     - [Structs](#structs)
+      - [Methods](#methods)
 
 # Rust-lang
 
@@ -112,6 +114,28 @@ println!("baz");
 ```
 We explore many programming concepts in the concepts section.
 
+### Debug
+
+To effectively log structs, they must have a `Debug` attribute.
+```rust
+#[derive(Debug)]
+struct StructName {
+```
+Individual properties will not stringify, as that takes ownership.  
+`dbg!()` can only accept primitives or complex structures explicitly marked. It prints to the `stderr` stream.
+
+`println!()` is another helpful debugging tool, but it prints to a different stream of `stdout`. It needs specific formatting to print structs:
+
+```rust
+// usage:
+let some_struct = Rectangle {
+    height: 10,
+    width: 20
+};
+println!("label: {:#?}", some_struct);
+dbg!(some_struct);
+```
+
 ### Ownership  
 
 **Ownership is a set of rules that govern how a Rust program manages memory.**
@@ -144,3 +168,32 @@ let user = User {
 }
 ```
 
+#### Methods
+
+Methods are added to structs using the `impl` keyword.
+We can make multiple `impl` decalarations and they all
+will bind to the parent `struct`.  
+
+```rust
+struct SomeStruct {
+    some_prop: u32
+}
+
+impl SomeStruct {
+    // Does nothing special
+    fn hello() {
+        println!("hello, world!");
+    }
+    // Calcs using self reference
+    fn can_hold(&self, some_other_struct: &SomeStruct) -> bool {
+        self.some_prop > some_other_struct.some_prop
+    }
+    // Generates instance without instance
+    fn square(size: u32) -> Self {
+        Self {
+            width: size,
+            height: size
+        }
+    }
+}
+```
