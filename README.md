@@ -8,6 +8,7 @@
   - [Error Handling](#error-handling)
   - [Concepts](#concepts)
     - [Evaluation](#evaluation)
+  - [Ownership](#ownership)
 
 # RUST
 
@@ -27,6 +28,14 @@ Rust is an ahead-of-time compiled language, meaning you can compile a program an
 - [03_guessing_game](3_guessing_game/src/main.rs) - Variables, iteration, logic
 - [04_concepts](4_concepts/src/main.rs) - Deeper variables, data types, functions, and control flow
   - This is a larger set of functionality and contains many funcs.
+- [05_ownership](5_ownership/src/main.rs) - Memory management and data integrity
+  - This is a relatively abstract area. Demo logs are available by running the binary.
+
+**To run a binary, enter the directory for `cargo` commands:**  
+```rust
+cd 4_concepts
+cargo run
+```
 
 ## Package Management
 
@@ -87,19 +96,32 @@ Read documentation for `expect()` signature:
 ### Evaluation
 ```rust
 // Statements are instructions that perform some action and do not return a value.
+// They use semicolons as terminations.
 let foo = "bar";
 println!("baz");
+
 // Expressions evaluate to a resultant value. Let’s look at some examples.
-3 = 3
-fn life() {
-  42
-}
+// They do not use a semicolon, as they propagate the value.
+3 == 3 -> true
+42 + 1 -> 43
 ```
 We explore many programming concepts in the concepts section.
 
 > [04_concepts](4_concepts/src/main.rs) - Deeper variables, data types, functions, and control flow
 
-```rust
-cd 4_concepts
-cargo run
-```
+## Ownership  
+
+**Ownership is a set of rules that govern how a Rust program manages memory.**
+
+All programs have to manage the way they use a computer's memory while running.
+
+- Some languages have garbage collection that regularly looks for no-longer-used memory as the program runs.  
+- In other languages, the programmer must explicitly allocate and free the memory.
+
+**Rust uses a third approach: memory is managed through a system of ownership with a set of rules that the compiler checks.**
+
+If any of the rules are violated, the program won’t compile.
+
+> None of the features of ownership will slow down your program while it’s running.
+
+> [05_ownership](5_ownership/src/main.rs) - Memory management and data integrity
