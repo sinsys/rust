@@ -71,7 +71,11 @@ A crate is a collection of Rust source code files.
 This project contains many binary crates, which are executable.
 
 - **Binary Crate** - Executable.
+  - `src/main.rs` is root module binary crate
+  - `bin/**/*.rs` are additional, executable binary crates
 - **Libary Crate** - Contains code to be used in other programs. Not standalone.
+  - `src/lib.rs` is a library crate for your binary
+  - > You get 0 or 1 library crates, no more, no less!
 
 The `Cargo.toml` file handles *library crate dependencies* and *binary crate definitions*.
 
