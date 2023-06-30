@@ -12,6 +12,7 @@
     - [Ownership](#ownership)
     - [Structs](#structs)
       - [Methods](#methods)
+    - [Enums](#enums)
 
 # Rust-lang
 
@@ -197,3 +198,5 @@ impl SomeStruct {
     }
 }
 ```
+
+### Enums
