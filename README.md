@@ -11,8 +11,9 @@
     - [Debug](#debug)
     - [Ownership](#ownership)
     - [Structs](#structs)
-      - [Methods](#methods)
     - [Enums](#enums)
+    - [Modules](#modules)
+    - [Collections](#collections)
 
 # Rust-lang
 
@@ -87,9 +88,12 @@ https://crates.io/
 
 [Common Rust Programming Concepts](https://doc.rust-lang.org/book/ch03-00-common-programming-concepts.html)
 
-- [concepts](3_concepts/src/main.rs) - Deeper variables, data types, functions, and control flow
+- [concepts](3_concepts/src/main.rs) - Variables, data types, functions, and control flow
 - [ownership](4_ownership/src/main.rs) - Memory management and data integrity
 - [structs](5_structs/src/main.rs) - Data structure 'struct' (object)
+- [enums](6_enums/src/main.rs) - Enums and custom type categories
+- [modules](7_modules/src/main.rs) - Creating modules and going over libraries
+- [collections](8_collections/src/main.rs) - Iterating, text, and hash maps
 
 ### Error Handling
 
@@ -137,11 +141,14 @@ let some_struct = Rectangle {
     height: 10,
     width: 20
 };
-println!("label: {:#?}", some_struct);
-dbg!(some_struct);
+println!("label: {:?}", some_struct); // print
+println!("label: {:#?}", some_struct); // pretty print
+dbg!(some_struct); // stderr pretty print
 ```
 
 ### Ownership  
+
+> [See Chapter 4](4_ownership/src/main.rs)  
 
 **Ownership is a set of rules that govern how a Rust program manages memory.**
 
@@ -158,14 +165,18 @@ If any of the rules are violated, the program won’t compile.
 
 ### Structs
 
+> [See Chapter 5](5_ownership/src/main.rs)  
+
 Structs operate much like objects on OOP.
 
+**Structs**
 ```rust
 struct User {
     active: bool,
     username: String,
     sign_in_count: u64
 }
+
 let user = User {
   active: true,
   username: String::from("username"),
@@ -173,7 +184,7 @@ let user = User {
 }
 ```
 
-#### Methods
+**Methods**
 
 Methods are added to structs using the `impl` keyword.
 We can make multiple `impl` decalarations and they all
@@ -204,3 +215,13 @@ impl SomeStruct {
 ```
 
 ### Enums
+
+- [See Chapter 6](6_enums/src/main.rs) - Enums and custom type categories
+
+### Modules
+
+- [See Chapter 7](7_modules/src/main.rs) - Creating modules and going over libraries
+
+### Collections
+
+- [See Chapter 8](8_collections/src/main.rs) - Iterating, text, and hash maps
