@@ -1,6 +1,5 @@
 - [Rust-lang](#rust-lang)
   - [Description](#description)
-  - [Directories](#directories)
   - [Package Management](#package-management)
     - [Commands](#commands)
     - [Libraries](#libraries)
@@ -14,6 +13,10 @@
     - [Enums](#enums)
     - [Modules](#modules)
     - [Collections](#collections)
+      - [Vectors](#vectors)
+      - [Strings](#strings)
+      - [Hash Maps](#hash-maps)
+    - [Error Handling](#error-handling-1)
 
 # Rust-lang
 
@@ -26,21 +29,13 @@ Rust is an ahead-of-time compiled language, meaning you can compile a program an
 
 **Everything is a trade-off in language design.**
 
+This repository is a sandbox to experiment while running through **The Rust Book**.
+
+> [The Rust Book](https://doc.rust-lang.org/book)  
+
+You can also explore further resources here:  
+
 > [Learn Rust](https://www.rust-lang.org/learn)  
-
-## Directories
-
-- [1_getting-started](1_getting-started) - Hello, world!
-- [2_guessing_game](2_guessing-game/src/main.rs) - Basic project w/ variables, iteration, logic
-- [3_concepts](3_concepts/src/main.rs) - Deeper variables, data types, functions, and control flow
-- [4_ownership](4_ownership/src/main.rs) - Memory management and data integrity
-- [5_structs](5_structs/src/main.rs) - Data structure 'struct' (object)
-
-**To run a binary, enter the directory for `cargo` commands:**  
-```rust
-cd 4_concepts
-cargo run
-```
 
 ## Package Management
 
@@ -88,12 +83,18 @@ https://crates.io/
 
 [Common Rust Programming Concepts](https://doc.rust-lang.org/book/ch03-00-common-programming-concepts.html)
 
-- [concepts](3_concepts/src/main.rs) - Variables, data types, functions, and control flow
-- [ownership](4_ownership/src/main.rs) - Memory management and data integrity
-- [structs](5_structs/src/main.rs) - Data structure 'struct' (object)
-- [enums](6_enums/src/main.rs) - Enums and custom type categories
-- [modules](7_modules/src/main.rs) - Creating modules and going over libraries
-- [collections](8_collections/src/main.rs) - Iterating, text, and hash maps
+- [3_concepts](3_concepts/src/main.rs) - Variables, data types, functions, and control flow
+- [4_ownership](4_ownership/src/main.rs) - Memory management and data integrity
+- [5_structs](5_structs/src/main.rs) - Data structure 'struct' (object)
+- [6_enums](6_enums/src/main.rs) - Enums and custom type categories
+- [7_modules](7_modules/src/main.rs) - Creating modules and going over libraries
+- [8_collections](8_collections/src/main.rs) - Iterating, text, and hash maps
+
+**To run a binary, enter the directory for `cargo` commands:**  
+```rust
+cd 4_concepts
+cargo run
+```
 
 ### Error Handling
 
@@ -116,7 +117,7 @@ Read documentation for `expect()` signature:
 let foo = "bar";
 println!("baz");
 
-// Expressions evaluate to a resultant value. Let’s look at some examples.
+// Expressions evaluate to a resultant value. Let's look at some examples.
 // They do not use a semicolon, as they propagate the value.
 3 == 3 -> true
 42 + 1 -> 43
@@ -159,9 +160,9 @@ All programs have to manage the way they use a computer's memory while running.
 
 **Rust uses a third approach: memory is managed through a system of ownership with a set of rules that the compiler checks.**
 
-If any of the rules are violated, the program won’t compile.
+If any of the rules are violated, the program won't compile.
 
-> None of the features of ownership will slow down your program while it’s running.
+> None of the features of ownership will slow down your program while it's running.
 
 ### Structs
 
@@ -218,10 +219,163 @@ impl SomeStruct {
 
 - [See Chapter 6](6_enums/src/main.rs) - Enums and custom type categories
 
-### Modules
+We use enums to encode meaning along with data. Pattern matching is a critical part 
+of programming in Rust.
 
-- [See Chapter 7](7_modules/src/main.rs) - Creating modules and going over libraries
+> **Structs** group related fields and data like an `object`  
+> **Enums** give you a way to define a `Set` of options  
 
-### Collections
+```rust
+enum Coin { Heads, Tails }
+fn which_side(coin: Coin) {
+    match coin {
+        Coin::Tails => println!("tails"),
+        Coin::Heads => println!("heads"),
+        _ => panic!("what happened"),
+    }
+}
+which_side(Coin::Heads); // "heads"
+```
+
+`if let` is syntax sugar for a match that runs code when the value matches one pattern and then ignores all other values.  
+
+It may also contain an else as a catch all.
+
+```rust
+// Counting quarters NOT from a specific state
+let mut count = 0;
+if let Coin::Quarter(state) = coin {
+    println!("State quarter from {:?}!", state);
+} else {
+    count += 1;
+}
+
+// Identical to
+let mut count = 0;
+match coin {
+    Coin::Quarter(state) => println!("State quarter from {:?}!", state),
+    _ => count += 1,
+}
+```
+
+### Modules  
+
+- [See Chapter 7](7_modules/src/main.rs) - Modules, packages, crates, and paths
+
+A package can contain multiple binary crates and optionally one library crate.
+As a package grows, you can extract parts into separate crates that become external dependencies
+This chapter covers all these techniques.
+
+> For **very large projects** comprising a set of interrelated packages that evolve together,
+> Cargo provides workspaces, which we'll cover in the “Cargo Workspaces”
+> section in Chapter 14.
+
+**Terminology:**  
+
+- **Packages**: A Cargo feature that lets you build, test, and share crates
+- **Crates**: A tree of modules that produces a library or executable
+- **Modules** and use: Let you control the organization, scope, and privacy of paths
+- **Paths**: A way of naming an item, such as a struct, function, or module
+
+A package can contain as many binary crates as you like, but at most only one library crate!  
+A package must contain at least one crate, whether that's a library or binary crate.
+
+binary: `main.rs`
+```rust
+use my_library::eat_at_restaurant;
+fn main() {
+    eat_at_restaurant();
+}
+```
+
+library: `lib.rs`
+```rust
+...
+pub fn eat_at_restaurant() {
+    hosting::add_to_waitlist();
+    let meal = self::back_of_house::Breakfast::summer("Rye");
+    let order = self::back_of_house::Appetizer::Soup;
+    println!("{:?}{:?}", meal, order);
+}
+```  
+
+The scope of modules can get quite large. For further reading, reference the workflows
+or read the source material:
+
+[Rust Lang Book - Modules](https://doc.rust-lang.org/book/ch07-00-managing-growing-projects-with-packages-crates-and-modules.html)  
+
+### Collections  
 
 - [See Chapter 8](8_collections/src/main.rs) - Iterating, text, and hash maps
+
+Most other data types represent one specific value, but collections can contain multiple values.
+
+The data is stored on the heap, which means the amount of data does not need to be
+known at compile time and can grow or shrink as the program runs.
+
+Each kind of collection has different capabilities and costs (*tradeoffs*!), and choosing an appropriate one for your current situation is a skill you'll develop over time. 
+
+- `vector`: allows you to store a variable number of values next to each other.
+- `string`: is a collection of characters. We've mentioned the String type previously, but in this chapter we'll talk about it in depth.
+- `hash map`: allows you to associate a value with a particular key. It's a particular implementation of the more general data structure called a map.
+
+#### Vectors
+
+The first collection type we'll look at is Vec<T>, also known as a vector.
+
+Vectors allow you to store more than one value in a single data structure that puts all
+the values next to each other in memory. Vectors can only store values of the same type.
+
+They are useful when you have a list of items, such as the lines of text in a file
+or the prices of items in a shopping cart.
+
+> We can use `enums` to create a custom type that can hold many types, though!
+
+#### Strings
+
+We discuss strings in the context of collections because strings are implemented as a collection of bytes, plus some methods to provide useful functionality when those bytes are interpreted as text.
+
+We'll talk about the operations on `String` that every collection type has, such as creating, updating, and reading.
+
+We'll also discuss the ways in which String is different from the other collections, namely
+how indexing into a String is complicated by the differences between how people and computers
+interpret String data.
+
+```rust
+// Ways to generate a string
+let s0 = String::new();
+let s1 = "initial contents";
+let s2 = data.to_string();
+let s3 = "initial contents".to_string();
+let s4 = String::from("initial contents");
+```
+
+#### Hash Maps
+
+Hash maps are useful when you want to look up data not by using an index, as you
+can with vectors, but by using a key that can be of any type.
+
+For example, in a game, you could keep track of each team’s score in a hash map
+in which each key is a team’s name and the values are each team’s score. Given
+a team name, you can retrieve its score.
+
+```rust
+fn hashmaps() {
+    let blue = String::from("blue");
+    let yellow = String::from("yellow");
+    let mut scores = HashMap::new();
+
+    scores.insert(&blue, 10);
+    scores.insert(&yellow, 10);
+    scores.insert(&blue, 10);
+    scores.insert(&yellow, 50);
+    scores.entry(&blue).or_insert(100);
+    scores.entry(&yellow).or_insert(10);
+
+    let home_score = scores.get(&blue);
+    let visitor_score = scores.get(&yellow);
+    println!("Home: {:?}\nVisitor: {:?}\n", home_score, visitor_score);
+}
+```
+
+### Error Handling

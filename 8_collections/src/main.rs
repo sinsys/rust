@@ -2,11 +2,15 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 use unicode_segmentation::UnicodeSegmentation;
+use std::collections::HashMap;
 
 fn main() {
     demo_el_iteration();
     vector_enums();
     strings();
+    hashmaps();
+    hashmaps_two();
+    
 }
 
 fn demo_el_iteration() {
@@ -71,7 +75,7 @@ fn vector_enums() {
 }
 
 fn strings() {
-    println!("! BEGIN strings !\n");
+    println!("! BEGIN strings !");
     // Collection of utf-8 encoded bytes
     // UTF-8 requires ASCII for string encoding
     // ASCII can only represent 128 characters
@@ -92,7 +96,6 @@ fn strings() {
 
     let s5 = s4 + &s3;
     println!("s5: {}", s5); // "s5: initial contentsbar!initial contents"
-    println!("! END strings !\n");
 
     let s6 = format!("{}{}", s2, s3);
     println!("s6: {}", s6); // "s6: initial contentsinitial contents"
@@ -110,4 +113,38 @@ fn strings() {
         println!("grapheme: {}", g);
     }
     println!("! END strings !\n");
+}
+
+fn hashmaps() {
+    println!("! START hashmaps !");
+    let blue = String::from("blue");
+    let yellow = String::from("yellow");
+
+    let mut scores = HashMap::new();
+    scores.insert(&blue, 10);
+    scores.insert(&yellow, 10);
+    scores.insert(&blue, 10);
+    scores.insert(&blue, 50);
+    scores.entry(&yellow).or_insert(100);
+    scores.entry(&yellow).or_insert(10);
+
+    let home_score = scores.get(&blue);
+    let visitor_score = scores.get(&yellow);
+
+    println!("Home: {:?}\nVisitor: {:?}\n", home_score, visitor_score);
+    println!("{:#?}", scores);
+
+    println!("! END hashmaps !\n");
+}
+
+fn hashmaps_two() {
+    println!("! START hashmaps_two !");
+    let text = "hello world wonderful world";
+    let mut map = HashMap::new();
+    for word in text.split_whitespace() {
+        let count = map.entry(word).or_insert(0);
+        *count += 1;
+    }
+    println!("{:#?}", map);
+    println!("! END hashmaps_two !\n");
 }
