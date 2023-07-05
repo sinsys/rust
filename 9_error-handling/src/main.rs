@@ -3,7 +3,7 @@
 #![allow(unused_variables)]
 use std::env::current_dir;
 use std::fs::{File, read_to_string};
-use std::io::ErrorKind;
+use std::io::{self, ErrorKind, Read};
 
 fn main() {
     // Demo for crashing deeply
@@ -11,9 +11,13 @@ fn main() {
     println!("{:?}", current_dir());
     // Paths are from project root, not src!
     let input = String::from("./working.txt");
-    let contents = read_to_string(input);
+    let contents = read_to_string(&input);
     println!("{:?}", contents);
-    read_file();
+    let contents_2 = read_file();
+    let contents_3 = read_file_closures();
+    let contents_4 = unwrap(&input);
+    let username = read_username_from_file();
+    println!("{:?}", username);
 }
 
 fn a() {
@@ -81,4 +85,23 @@ fn read_file_closures() -> File {
             panic!("Problem opening the file: {:?}", error);
         }
     })
+}
+
+fn unwrap(path: &str) -> File {
+    File::open(path)
+        // only accepts a &str
+        .expect("Problem opening the file")
+}
+
+fn read_username_from_file() -> Result<String, io::Error> {
+    let f = File::open("./username.txt");
+    let mut f = match f {
+        Ok(file) => file,
+        Err(e) => return Err(e),
+    };
+    let mut s = String::new();
+    match f.read_to_string(&mut s) {
+        Ok(_) => Ok(s),
+        Err(e) => Err(e),
+    }
 }

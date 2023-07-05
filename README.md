@@ -5,7 +5,6 @@
     - [Libraries](#libraries)
     - [Crates](#crates)
   - [Concepts](#concepts)
-    - [Error Handling](#error-handling)
     - [Evaluation](#evaluation)
     - [Debug](#debug)
     - [Ownership](#ownership)
@@ -16,7 +15,7 @@
       - [Vectors](#vectors)
       - [Strings](#strings)
       - [Hash Maps](#hash-maps)
-    - [Error Handling](#error-handling-1)
+    - [Error Handling](#error-handling)
 
 # Rust-lang
 
@@ -89,26 +88,13 @@ https://crates.io/
 - [6_enums](6_enums/src/main.rs) - Enums and custom type categories
 - [7_modules](7_modules/src/main.rs) - Creating modules and going over libraries
 - [8_collections](8_collections/src/main.rs) - Iterating, text, and hash maps
+- [9_error-handling](9_error-handling/src/main.rs) - Error handling
 
 **To run a binary, enter the directory for `cargo` commands:**  
 ```rust
 cd 4_concepts
 cargo run
 ```
-
-### Error Handling
-
-Result type enum is:
-- `Ok`
-- `Err`
-
-Quite simply, you are guaranteed to get one of the above responses in any `Result`, and each have differing methods.
-
-Read documentation for `expect()` signature:
-
-[expect() Docs](https://doc.rust-lang.org/std/result/enum.Result.html#method.expect)  
-
-> Warnings will be thrown if `.expect()` is not chained onto `Result`
 
 ### Evaluation
 ```rust
@@ -379,3 +365,51 @@ fn hashmaps() {
 ```
 
 ### Error Handling
+
+- [See Chapter 9](9_error-handling/src/main.rs) - Error handling
+
+Result type enum is:
+- `Ok`
+- `Err`
+
+Quite simply, you are guaranteed to get one of the above responses in any `Result`, and each have differing methods.
+
+Read documentation for `expect()` signature:
+
+[expect() Docs](https://doc.rust-lang.org/std/result/enum.Result.html#method.expect)  
+
+> Warnings will be thrown if `.expect()` is not chained onto `Result`
+
+You can use closures as well for a potentially terser version.
+
+```rust
+fn read_file() -> File {
+    let path = String::from("./not-exist.txt");
+    let f = File::open(&path);
+    match f {
+        Ok(file) => file,
+        Err(error) => match error.kind() {
+            ErrorKind::NotFound => match File::create(&path) {
+                Ok(file_contents) => file_contents,
+                Err(error) => panic!("Problem creating the file: {:?}", error)
+            },
+            other_error => {
+                panic!("Problem opening the file: {:?}", other_error)
+            }
+        }
+    }
+}
+
+fn read_file_closures() -> File {
+    let path = String::from("./not-exist.txt");
+    File::open(&path).unwrap_or_else(|error| {
+        if error.kind() == ErrorKind::NotFound {
+            File::create(&path).unwrap_or_else(|error| {
+                panic!("Problem creating the file: {:?}", error)
+            })
+        } else {
+            panic!("Problem opening the file: {:?}", error);
+        }
+    })
+}
+```
