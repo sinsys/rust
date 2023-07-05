@@ -2,10 +2,11 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 use std::env::current_dir;
-use std::fs::{File, read_to_string};
+use std::error::Error;
+use std::fs::{self, File, read_to_string};
 use std::io::{self, ErrorKind, Read};
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     // Demo for crashing deeply
     // a();
     println!("{:?}", current_dir());
@@ -18,6 +19,8 @@ fn main() {
     let contents_4 = unwrap(&input);
     let username = read_username_from_file();
     println!("{:?}", username);
+    let file = File::open("hello.txt")?;
+    Ok(())
 }
 
 fn a() {
@@ -105,3 +108,15 @@ fn read_username_from_file() -> Result<String, io::Error> {
         Err(e) => Err(e),
     }
 }
+
+fn read_username_from_file_simplified() -> Result<String, io::Error> {
+    let mut s = String::new();
+    let f = File::open("./username.txt")?
+        .read_to_string(&mut s)?;
+    Ok(s)
+}
+
+fn read_username_from_file_simplifiedest() -> Result<String, io::Error> {
+    fs::read_to_string("./working.txt")
+}
+

@@ -380,9 +380,19 @@ Read documentation for `expect()` signature:
 
 > Warnings will be thrown if `.expect()` is not chained onto `Result`
 
+By default, we should use `Result` and error propagation, which allows the caller to best
+handle the error.
+
+> `panic()` is only used when it is an **irrecoverable** crash!  
+> It will also cause the program to immediately terminate!
+> Use `panic()` for examples or absolute crashes only!
+
+For deeper error handling, we can use patterns like below:
+
 You can use closures as well for a potentially terser version.
 
 ```rust
+// Result
 fn read_file() -> File {
     let path = String::from("./not-exist.txt");
     let f = File::open(&path);
@@ -399,7 +409,7 @@ fn read_file() -> File {
         }
     }
 }
-
+// Closures
 fn read_file_closures() -> File {
     let path = String::from("./not-exist.txt");
     File::open(&path).unwrap_or_else(|error| {
