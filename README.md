@@ -16,6 +16,10 @@
       - [Strings](#strings)
       - [Hash Maps](#hash-maps)
     - [Error Handling](#error-handling)
+    - [Abstract](#abstract)
+      - [Generics](#generics)
+      - [Traits](#traits)
+      - [Validation](#validation)
 
 # Rust-lang
 
@@ -423,3 +427,62 @@ fn read_file_closures() -> File {
     })
 }
 ```
+
+### Abstract
+
+This is a larger section comprised of:
+- Generics
+- Traits
+- Validation
+
+The general principles are difficult to bucket, so we have chosen to aggregate them into
+an "abstract" category.
+
+Every programming language has tools for effectively handling the duplication of concepts.  
+
+We use **generics** to allow abstract types to be inferred so that the same code can produce
+different functionality. Generics enable us to *generalize* parameters and properties.
+
+We use **traits** to define behavior in a generic way. You can combine traits with generic types
+to constrain a generic type to accept only those types that have a particular behavior, as
+opposed to just any type.
+
+We use **lifetimes** to allow us to give the compiler enough information about borrowed values so
+that it can ensure references will be valid in more situations than it could without our help.
+
+#### Generics
+
+- [See Chapter 10-1](10_1_generics/src/main.rs) - Generics
+
+We use generics to create definitions for items like function signatures or structs, which we can
+then use with many different concrete data types.
+
+> The `Option` and the `Result` enums use a **generic** `T` to infer a result type.  
+> The `Result` enum also has a secondary **generic** `E` to infer an error type.
+
+```rust
+struct Point2<T> {
+    x: T,
+}
+impl<T> Point<T> {
+    pub fn x(&self) -> &T {
+        &self.x
+    }
+}
+let point_int = Point { x: 42 }; // T type integer
+let point_float = Point { x: 42.12 }; // T type float
+let point_char = Point { x: 'c' }; // T type char
+let point_str = Point { x: "String" }; // T type String
+```
+
+#### Traits  
+
+- [See Chapter 10-2](10_2_traits/src/main.rs) - Traits
+
+(tbd)
+
+#### Validation
+
+- [See Chapter 10-3](10_3_validation/src/main.rs) - Validation
+
+(tbd)
