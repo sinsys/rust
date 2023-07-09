@@ -4,22 +4,22 @@
     - [Commands](#commands)
     - [Libraries](#libraries)
     - [Crates](#crates)
-  - [Concepts](#concepts)
+  - [3\_Concepts](#3_concepts)
     - [Evaluation](#evaluation)
     - [Debug](#debug)
-    - [Ownership](#ownership)
-    - [Structs](#structs)
-    - [Enums](#enums)
-    - [Modules](#modules)
-    - [Collections](#collections)
+    - [4\_Ownership](#4_ownership)
+    - [5\_Structs](#5_structs)
+    - [6\_Enums](#6_enums)
+    - [7\_Modules](#7_modules)
+    - [8\_Collections](#8_collections)
       - [Vectors](#vectors)
       - [Strings](#strings)
       - [Hash Maps](#hash-maps)
-    - [Error Handling](#error-handling)
-    - [Abstract](#abstract)
-      - [Generics](#generics)
-      - [Traits](#traits)
-      - [Validation](#validation)
+    - [9\_Error Handling](#9_error-handling)
+    - [10\_Abstract](#10_abstract)
+      - [10\_1\_Generics](#10_1_generics)
+      - [10\_2\_Traits](#10_2_traits)
+      - [10\_3\_Validation](#10_3_validation)
 
 # Rust-lang
 
@@ -82,7 +82,7 @@ External dependencies (library crates) are fetched from:
 
 https://crates.io/
 
-## Concepts
+## 3_Concepts
 
 [Common Rust Programming Concepts](https://doc.rust-lang.org/book/ch03-00-common-programming-concepts.html)
 
@@ -93,7 +93,12 @@ https://crates.io/
 - [7_modules](7_modules/src/main.rs) - Creating modules and going over libraries
 - [8_collections](8_collections/src/main.rs) - Iterating, text, and hash maps
 - [9_error-handling](9_error-handling/src/main.rs) - Error handling
-
+- **Abstract:**
+  - [10_1_generics](10_1_generics/src/main.rs) - Generic data types
+  - [10_2_traits](10_2_traits/src/main.rs) - Traits and shared behavior
+  - [10_3_validation](10_3_validation/src/main.rs) - Validating references
+- -[11_testing](11_testing/src/main.rs) - Testing in Rust
+\
 **To run a binary, enter the directory for `cargo` commands:**  
 ```rust
 cd 4_concepts
@@ -137,7 +142,7 @@ println!("label: {:#?}", some_struct); // pretty print
 dbg!(some_struct); // stderr pretty print
 ```
 
-### Ownership  
+### 4_Ownership  
 
 > [See Chapter 4](4_ownership/src/main.rs)  
 
@@ -154,7 +159,7 @@ If any of the rules are violated, the program won't compile.
 
 > None of the features of ownership will slow down your program while it's running.
 
-### Structs
+### 5_Structs
 
 > [See Chapter 5](5_ownership/src/main.rs)  
 
@@ -205,7 +210,7 @@ impl SomeStruct {
 }
 ```
 
-### Enums
+### 6_Enums
 
 - [See Chapter 6](6_enums/src/main.rs) - Enums and custom type categories
 
@@ -248,7 +253,7 @@ match coin {
 }
 ```
 
-### Modules  
+### 7_Modules  
 
 - [See Chapter 7](7_modules/src/main.rs) - Modules, packages, crates, and paths
 
@@ -294,7 +299,7 @@ or read the source material:
 
 [Rust Lang Book - Modules](https://doc.rust-lang.org/book/ch07-00-managing-growing-projects-with-packages-crates-and-modules.html)  
 
-### Collections  
+### 8_Collections  
 
 - [See Chapter 8](8_collections/src/main.rs) - Iterating, text, and hash maps
 
@@ -368,7 +373,7 @@ fn hashmaps() {
 }
 ```
 
-### Error Handling
+### 9_Error Handling
 
 - [See Chapter 9](9_error-handling/src/main.rs) - Error handling
 
@@ -428,7 +433,7 @@ fn read_file_closures() -> File {
 }
 ```
 
-### Abstract
+### 10_Abstract
 
 This is a larger section comprised of:
 - Generics
@@ -450,7 +455,7 @@ opposed to just any type.
 We use **lifetimes** to allow us to give the compiler enough information about borrowed values so
 that it can ensure references will be valid in more situations than it could without our help.
 
-#### Generics
+#### 10_1_Generics
 
 - [See Chapter 10-1](10_1_generics/src/main.rs) - Generics
 
@@ -475,13 +480,49 @@ let point_char = Point { x: 'c' }; // T type char
 let point_str = Point { x: "String" }; // T type String
 ```
 
-#### Traits  
+#### 10_2_Traits  
 
 - [See Chapter 10-2](10_2_traits/src/main.rs) - Traits
 
-(tbd)
+Traits enable us to set shared methods across different types.
 
-#### Validation
+> Note: Traits are similar to a feature often called interfaces in other languages,  
+> although with some differences.  
+
+Trait definitions are a way to group method signatures together to define a set of behaviors  
+necessary to accomplish some purpose.  
+
+For example, one type of `trait` would be `Display`. This is a trait that applies to data  
+that can be directly able to be displayed in `stdout`.
+
+> Display is similar to Debug, but Display is for user-facing output, and so cannot be derived.  
+
+`Debug` is another trait that we can apply that allows complex structs to be stringified.
+
+This topic is abstract so I will leave most of the content in the exercise to learn from.
+
+```rust
+struct Pair<T> {
+    x: T, y: T,
+}
+impl<T> Pair <T> {
+    fn new(x:T, y: T) -> Self {
+        Self {x,y}
+    }
+}
+// This is the trait. T must have Display and Partial Ordering
+impl<T: Display + PartialOrd> Pair<T> {
+    fn cmp_display(&self) {
+        if self.x >= self.y {
+            println!("The largest num: {}", self.x)
+        } else {
+            println!("The largest num: {}", self.y)
+        }
+    }
+}
+```
+
+#### 10_3_Validation
 
 - [See Chapter 10-3](10_3_validation/src/main.rs) - Validation
 
