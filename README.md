@@ -20,6 +20,8 @@
       - [10\_1\_Generics](#10_1_generics)
       - [10\_2\_Traits](#10_2_traits)
       - [10\_3\_Lifetimes](#10_3_lifetimes)
+      - [11\_1\_Testing](#11_1_testing)
+
 
 # Rust-lang
 
@@ -97,7 +99,8 @@ https://crates.io/
   - [10_1_generics](10_1_generics/src/main.rs) - Generic data types
   - [10_2_traits](10_2_traits/src/main.rs) - Traits and shared behavior
   - [10_3_lifetimes](10_3_lifetimes/src/main.rs) - Understanding lifetimes
-- -[11_testing](11_testing/src/main.rs) - Testing in Rust
+- **Testing:**
+  - [11_1_testing](11_1_testing/src/main.rs) - Writing tests
 
 **To run a binary, enter the directory for `cargo` commands:**  
 ```rust
@@ -583,4 +586,34 @@ Generic Lifetime Annotations:
 &i32         // a reference
 &'a i32      // a ref with an explicit lifetime
 &'a mut i32  // a mutable ref with an explicit lifetime
+```
+
+#### 11_1_Testing
+
+- [See Chapter 11-1](11_1_testing/src/main.rs) - Writing tests
+
+Rust is already great at catching errors with types and memory. It can't, however, 
+check business logic of our code. For this we can write tests.
+
+There are two main assertion tools:
+
+- `assert_eq!()`
+- `assert_ne!()`  
+
+All evaluations must implement the `Partial Equal` and `Debug` traits on both sides 
+of the evaluation.
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_works() {
+        assert_eq!(2 + 2, 4);
+    }
+    #[test]
+    fn it_fails() {
+        assert_eq!(0, 4);
+    }
 ```
