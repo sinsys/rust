@@ -19,7 +19,7 @@
     - [10\_Abstract](#10_abstract)
       - [10\_1\_Generics](#10_1_generics)
       - [10\_2\_Traits](#10_2_traits)
-      - [10\_3\_Validation](#10_3_validation)
+      - [10\_3\_Lifetimes](#10_3_lifetimes)
 
 # Rust-lang
 
@@ -96,9 +96,9 @@ https://crates.io/
 - **Abstract:**
   - [10_1_generics](10_1_generics/src/main.rs) - Generic data types
   - [10_2_traits](10_2_traits/src/main.rs) - Traits and shared behavior
-  - [10_3_validation](10_3_validation/src/main.rs) - Validating references
+  - [10_3_lifetimes](10_3_lifetimes/src/main.rs) - Understanding lifetimes
 - -[11_testing](11_testing/src/main.rs) - Testing in Rust
-\
+
 **To run a binary, enter the directory for `cargo` commands:**  
 ```rust
 cd 4_concepts
@@ -522,8 +522,65 @@ impl<T: Display + PartialOrd> Pair<T> {
 }
 ```
 
-#### 10_3_Validation
+#### 10_3_Lifetimes
 
-- [See Chapter 10-3](10_3_validation/src/main.rs) - Validation
+- [See Chapter 10-3](10_3_lifetimes/src/main.rs) - Understanding lifetimes
 
-(tbd)
+Lifetimes are another kind of generic that we’ve already been using. Rather than ensuring that a type has  
+the behavior we want, lifetimes ensure that references are valid as long as we need them to be.
+
+> Annotating lifetimes is not even a concept most other programming languages have, so this is going to feel unfamiliar!
+
+**Generic Lifetime Annotations** help the borrow checker understand the relationship between 
+lifetimes of multiple references, which in turn helps it identify dangling refs.
+
+Lifetimes are *always* tied to at least one `parameter` of a function or method because if we 
+pass back a reference from the function, it guarantees its lifetime is not available!
+
+The compiler will try to execute these automatic `lifetime parameters`:
+
+1. Each `parameter` that is a reference gets its **own** `lifetime parameter`!
+2. If there is exactly one input `lifetime parameter`, that lifetime is 
+assigned to all **output** `lifetime parameters`.
+1. If there are multiple **input** `lifetime parameters`, 
+but one of them is `&self` or `&mut self`, the lifetime 
+of self is assigned to all **output** `lifetime parameters`.
+    > This only applies to methods
+
+If the compiler reaches the end of this ruleset and still cannot infer ownership, 
+a manual lifetime annotation is required.
+
+```rust
+
+use std::fmt::Display;
+fn longest_with_an_announcement<'a, T>(
+    x: &'a str, // Same lifetime
+    y: &'a str, // Same lifetime
+    ann: T,     // Must infer Display
+) -> &'a str    // Same lifetime
+where
+    T: Display  // Must infer Display
+{
+    println!("Announcement: {}", ann);
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+```
+
+> Static lifetimes are special lifetimes that exist for the entire duration of 
+the program.
+
+```rust
+    // String literals are stored in binary, so they survive the program
+    let static_lifetime: &'static str = "I have a static lifetime!";
+```
+
+Generic Lifetime Annotations:
+```md
+&i32         // a reference
+&'a i32      // a ref with an explicit lifetime
+&'a mut i32  // a mutable ref with an explicit lifetime
+```
